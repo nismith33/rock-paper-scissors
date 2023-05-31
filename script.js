@@ -22,13 +22,47 @@ function roundJudgement(playerChoice, computerChoice) {
     //standardize input classification
     playerChoice = playerChoice.toLowerCase();
     if (playerChoice===computerChoice) {
-        return "Tie game";
+        return "tie";
     } else if (playerChoice==='rock'&& computerChoice==='scissors'
     ||playerChoice==='scissors'&& computerChoice==='paper'
     ||playerChoice==='paper'&& computerChoice==='rock') {
-        return "You win!";
-    } else {
-        return "You lose :(";
+        return "win";
+    } else if (playerChoice==='scissors'&& computerChoice==='rock'
+    ||playerChoice==='rock'&& computerChoice==='paper'
+    ||playerChoice==='paper'&& computerChoice==='scissors'){
+        return "loss";
+    }
+}
+
+/*Play rounds of RPS until either the computer or player
+gets WIN_SCORE many wins.
+*/
+function playGame(WIN_SCORE) {
+    let playerScore = 0;
+    let computerScore = 0;
+    while (playerScore <WIN_SCORE && computerScore<WIN_SCORE) {
+        let playerChoice = prompt("Choose rock, paper, or scissors");
+        switch (roundJudgement(playerChoice, getComputerChoice())) {
+            case ('tie'):
+            break;
+            case ("win"):
+                playerScore += 1;
+            break;
+            case ("loss"):
+                computerScore += 1;
+            break;
+            default:
+                alert("Your input is incomprehensible");
+        }
+        alert(`Current scores:
+        Computer - ${computerScore} points
+        Player - ${playerScore} points`)
+    }
+    if (playerScore===WIN_SCORE) {
+        alert("You won!");
+    } 
+    else {
+        alert("You lost :(");
     }
 }
 
