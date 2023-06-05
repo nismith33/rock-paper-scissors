@@ -34,10 +34,17 @@ function roundJudgement(playerChoice, computerChoice) {
     }
 }
 
+function updateScore(playerScore,computerScore) {
+    const playerScoreCard = document.querySelector('.playerScore');
+    playerScoreCard.textContent = `Player Score: ${playerScore}`;
+    const computerScoreCard = document.querySelector('.computerScore');
+    computerScoreCard.textContent = `Computer Score: ${computerScore}`;
+}
+
 /*Play rounds of RPS until either the computer or player
 gets WIN_SCORE many wins.
 */
-function playGame(WIN_SCORE) {
+function playGame(WIN_SCORE=1) {
     let playerScore = 0;
     let computerScore = 0;
     while (playerScore <WIN_SCORE && computerScore<WIN_SCORE) {
@@ -54,9 +61,7 @@ function playGame(WIN_SCORE) {
             default:
                 alert("Your input is incomprehensible");
         }
-        alert(`Current scores:
-        Computer - ${computerScore} points
-        Player - ${playerScore} points`)
+        updateScore(playerScore,computerScore);
     }
     if (playerScore===WIN_SCORE) {
         alert("You won!");
