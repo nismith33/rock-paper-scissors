@@ -8,6 +8,13 @@ buttons.forEach((button) => {
     });
 });
 const matchResult = document.querySelector('.results');
+const restart = document.querySelector('.restart');
+restart.addEventListener('click', ()=> {
+    playerScore = 0;
+    computerScore = 0;
+    matchResult.textContent = 'Restarted';
+    updateScore(playerScore, computerScore);
+});
 
 function playGame(playerChoice) {
     const computerChoice = getComputerChoice();
