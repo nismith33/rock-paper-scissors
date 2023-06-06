@@ -1,29 +1,29 @@
 let playerScore = 0;
 let computerScore = 0;
 const WIN_SCORE =3;
-const buttons = document.querySelectorAll('button');
+const buttons = document.querySelectorAll('.choices button');
 buttons.forEach((button) => {
     button.addEventListener('click', () => {
-        console.log(button.className);
         playGame(button.className);
     });
 });
+const matchResult = document.querySelector('.results');
 
 function playGame(playerChoice) {
     const computerChoice = getComputerChoice();
-    switch (roundJudgement(playerChoice, computerChoice)) {
+    const judgement = roundJudgement(playerChoice, computerChoice);
+    switch (judgement) {
         case ('tie'):
-            alert('tie');
         break;
         case ("win"):
-            alert('win');
             playerScore += 1;
         break;
-        case ("loss"):
-            alert('loss');
+        case ("lose"):
             computerScore += 1;
         break;
     }
+    matchResult.textContent = `You chose ${playerChoice}, the computer chose `
+        +`${computerChoice}, so you ${judgement} this round.`;
     updateScore(playerScore,computerScore);
 }
 
@@ -58,7 +58,7 @@ function roundJudgement(playerChoice, computerChoice) {
     } else if (playerChoice==='scissors'&& computerChoice==='rock'
     ||playerChoice==='rock'&& computerChoice==='paper'
     ||playerChoice==='paper'&& computerChoice==='scissors'){
-        return "loss";
+        return "lose";
     }
 }
 
