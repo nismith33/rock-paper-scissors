@@ -1,6 +1,7 @@
 let playerScore = 0;
 let computerScore = 0;
-const WIN_SCORE =3;
+const WIN_SCORE =5;
+let gameWon = false;
 const buttons = document.querySelectorAll('.choices button');
 buttons.forEach((button) => {
     button.addEventListener('click', () => {
@@ -9,29 +10,46 @@ buttons.forEach((button) => {
 });
 const matchResult = document.querySelector('.results');
 const restart = document.querySelector('.restart');
-restart.addEventListener('click', ()=> {
+restart.addEventListener('click', restartGame);
+
+function restartGame() {
     playerScore = 0;
     computerScore = 0;
-    matchResult.textContent = 'Restarted';
+    matchResult.textContent = 'Game restarted';
     updateScore(playerScore, computerScore);
-});
+    gameWon=false;
+}
 
 function playGame(playerChoice) {
-    const computerChoice = getComputerChoice();
-    const judgement = roundJudgement(playerChoice, computerChoice);
-    switch (judgement) {
-        case ('tie'):
-        break;
-        case ("win"):
-            playerScore += 1;
-        break;
-        case ("lose"):
-            computerScore += 1;
-        break;
+    if (!gameWon) {
+        const computerChoice = getComputerChoice();
+        const judgement = roundJudgement(playerChoice, computerChoice);
+        switch (judgement) {
+            case ('tie'):
+            break;
+            case ("win"):
+                playerScore += 1;
+            break;
+            case ("lose"):
+                computerScore += 1;
+            break;
+        }
+        matchResult.textContent = `You chose ${playerChoice}, the computer chose `
+            +`${computerChoice}, so you ${judgement} this round.`;
+        updateScore(playerScore,computerScore);
+        if (playerScore===WIN_SCORE) {
+            matchResult.textContent = "You have beaten the computer! Congrats!";
+            gameWon = true;
+        }
+        else if (computerScore===WIN_SCORE) {
+            matchResult.textContent = "The computer beat you. Better luck next time!";
+            gameWon = true;
+        }
     }
-    matchResult.textContent = `You chose ${playerChoice}, the computer chose `
-        +`${computerChoice}, so you ${judgement} this round.`;
-    updateScore(playerScore,computerScore);
+    else {
+        matchResult.textContent = "The game is over. Hit the Restart button if"
+            +" you wish to continue playing";
+    }
 }
 
 /*Picks an attack for the computer to use. The attack is
